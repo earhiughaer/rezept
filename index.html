@@ -53,11 +53,11 @@
       </div>
       <div class="row">
         <input id="file" type="file" accept=".json,.jsonld,application/json" />
+        <input id="images" type="file" accept="image/*" multiple />
         <button class="ghost" id="toggleMode" title="Schrittmodus / Vollansicht umschalten">Schrittmodus</button>
         <div class="row">
           <label class="kbd">Portionen</label>
           <input id="servings" type="number" min="1" step="0.5" value="2" style="width:110px" />
-          <span class="notice">Skaliert Zutatenmengen</span>
         </div>
       </div>
     </header>
@@ -71,7 +71,7 @@
           <h3>Zutaten</h3>
           <div class="row" style="justify-content: space-between; align-items: baseline">
             <div class="muted" id="yield"></div>
-            <div class="muted">Skalierungsfaktor: <span id="scale" class="pill">1.0×</span></div>
+            <span id="scale" class="pill">×1,0</span>
           </div>
           <ul id="ingredients"></ul>
         </div>
@@ -137,6 +137,13 @@ function formatAmount(x) {
   return String(rounded).replace('.', ',');
 }
 
+function formatFactor(x) {
+  if (!x || isNaN(x)) return '×1,0';
+  const rounded = Math.round(x * 100) / 100;
+  const str = String(rounded).replace('.', ',');
+  return '×' + str;
+}
+
 function extractArray(val) {
   if (!val) return [];
   if (Array.isArray(val)) return val;
@@ -195,6 +202,14 @@ function candidateImagePaths(p, recipeName) {
 
 // Map for local files selected via folder picker (basename -> object URL)
 const fileIndex = new Map();
+
+function indexSelectedImages(fileList) {
+  fileIndex.clear();
+  for (const f of fileList) {
+    const url = URL.createObjectURL(f);
+    fileIndex.set(f.name, url);
+  }
+}
 
 function resolveImagePath(p) {
   if (!p) return '';
@@ -389,7 +404,7 @@ function fillIngredients() {
   const desired = Number(sInput.value) || 1;
   const base = current.baseYield || desired;
   const scale = desired / base;
-  document.getElementById('scale').textContent = (Math.round(scale*100)/100) + '×';
+  document.getElementById('scale').textContent = formatFactor(scale);
   const ingr = extractArray(current.recipe?.recipeIngredient);
   if (!ingr.length) return;
   ingr.forEach(raw => {
@@ -444,6 +459,18 @@ fileInput.addEventListener('change', async (e) => {
   }
   rebuild(obj);
 });
+
+const imagesInput = document.getElementById('images');
+if (imagesInput) {
+  imagesInput.addEventListener('change', (e) => {
+    const files = e.target.files;
+    if (files && files.length) {
+      indexSelectedImages(files);
+      // Try to refresh images if a recipe is already loaded
+      if (current.recipe) rebuild(current.recipe);
+    }
+  });
+}
 
 // servings scale listener
 const servingsInput = document.getElementById('servings');
