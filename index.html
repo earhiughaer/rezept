@@ -52,8 +52,7 @@
         <div class="title" id="title">Rezepte Viewer</div>
       </div>
       <div class="row">
-        <input id="file" type="file" accept=".json,.jsonld,application/json" />
-        <input id="images" type="file" accept="image/*" multiple />
+        <input id="files" type="file" accept=".json,.jsonld,application/json,image/*" multiple />
         <button class="ghost" id="toggleMode" title="Schrittmodus / Vollansicht umschalten">Schrittmodus</button>
         <div class="row">
           <label class="kbd">Portionen</label>
@@ -440,41 +439,50 @@ function refreshStepper() {
 }
 
 // Events
-const fileInput = document.getElementById('file');
-fileInput.addEventListener('change', async (e) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
-  const text = await file.text();
+const filesInput = document.getElementById('files');
+filesInput.addEventListener('change', async (e) => {
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
+
+  // Finde die JSON-Datei und die Bilddateien
+  const jsonFile = files.find(f => f.name.endsWith('.json') || f.name.endsWith('.jsonld'));
+  const imageFiles = files.filter(f => f.type.startsWith('image/'));
+
+  if (!jsonFile) {
+    alert('Bitte wähle eine JSON-Rezeptdatei aus.');
+    return;
+  }
+
+  // Lade die Bilder in den Speicher, damit sie gefunden werden können
+  indexSelectedImages(imageFiles);
+
+  // Lese und verarbeite die JSON-Datei
+  const text = await jsonFile.text();
   let obj = null;
-  try { obj = JSON.parse(text); } catch (err) { alert('Keine gültige JSON-Datei.'); return; }
-  // JSON‑LD auf der Seite enthält häufig einen @graph – versuche Recipe zu finden
+  try {
+    obj = JSON.parse(text);
+  } catch (err) {
+    alert('Keine gültige JSON-Datei.');
+    return;
+  }
+
+  // JSON-LD auf der Seite enthält häufig einen @graph – versuche Recipe zu finden
   if (obj['@graph']) {
     const rec = obj['@graph'].find(x => x['@type'] === 'Recipe');
     if (rec) obj = rec;
   }
-  if (obj['@type'] !== 'Recipe') {
-    // manchmal ist @type ein Array
-    const t = Array.isArray(obj['@type']) ? obj['@type'] : [obj['@type']];
-    if (!t.includes('Recipe')) { alert('Kein schema.org Recipe gefunden.'); return; }
+  const type = Array.isArray(obj['@type']) ? obj['@type'] : [obj['@type']];
+  if (!type.includes('Recipe')) {
+    alert('Kein schema.org Recipe gefunden.');
+    return;
   }
+  
   rebuild(obj);
 });
 
-const imagesInput = document.getElementById('images');
-if (imagesInput) {
-  imagesInput.addEventListener('change', (e) => {
-    const files = e.target.files;
-    if (files && files.length) {
-      indexSelectedImages(files);
-      // Try to refresh images if a recipe is already loaded
-      if (current.recipe) rebuild(current.recipe);
-    }
-  });
-}
-
 // servings scale listener
 const servingsInput = document.getElementById('servings');
-servingsInput.addEventListener('input', () => { fillIngredients(); });
+servingsInput.addEventListener('input', () => { if (current.recipe) fillIngredients(); });
 
 // stepper controls
 const btnPrev = document.getElementById('prev');
@@ -510,8 +518,6 @@ btnMode.addEventListener('click', () => {
     aside.scrollIntoView({ behavior: 'smooth' });
   }
 });
-
-
 </script>
 </body>
 </html>
