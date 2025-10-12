@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Rezepte Viewer (JSON‑LD)</title>
+<style>
+  :root {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --text: #0b0c10;
+    --muted: #445069;
+    --accent: #0b5cff;
+    --border: #e6e8ef;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+  a { color: var(--accent); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 16px; }
+  header { display: grid; gap: 12px; margin-bottom: 16px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  input[type="number"], input[type="text"], button, select { background: #ffffff; color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; font-size: 16px; }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: #ffffff; border: none; }
+  button.ghost { background: transparent; color: var(--accent); }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 860px) { .grid { grid-template-columns: 1.2fr .8fr; } }
+  .title { font-size: 28px; font-weight: 700; }
+  .muted { color: var(--muted); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { background:#f6f7fb; border:1px solid var(--border); padding: 6px 10px; border-radius: 999px; font-size: 13px; }
+  .img { width: 100%; border-radius: 14px; display: block; border:1px solid var(--border); object-fit: cover; max-height: 360px; }
+  ul, ol { margin: 0; padding-left: 18px; }
+  .section h3 { margin: 10px 0 6px; font-size: 16px; }
+  .toolbar { display:flex; gap:8px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+  .toolbar .row { gap:8px; }
+  .stepper { display: grid; gap: 10px; }
+  .step { font-size: 20px; line-height: 1.5; }
+  .progress { font-size: 14px; color: var(--muted); }
+  .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; color: var(--muted); }
+  .pill { padding: 2px 8px; border-radius: 999px; border:1px solid var(--border); background:#f6f7fb; }
+  .hidden { display:none; }
+  .notice { font-size: 14px; color: var(--muted); }
+  .spacer { height:6px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="card">
+      <div class="row">
+        <div class="title" id="title">Rezepte Viewer</div>
+      </div>
+      <div class="row">
+        <input id="file" type="file" accept=".json,.jsonld,application/json" />
+        <button class="ghost" id="toggleMode" title="Schrittmodus / Vollansicht umschalten">Schrittmodus</button>
+        <div class="row">
+          <label class="kbd">Portionen</label>
+          <input id="servings" type="number" min="1" step="0.5" value="2" style="width:110px" />
+          <span class="notice">Skaliert Zutatenmengen</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <img id="image" class="img hidden" alt="Rezeptbild" />
+        <div class="spacer"></div>
+        <div class="chips" id="metaChips"></div>
+        <div class="section">
+          <h3>Zutaten</h3>
+          <div class="row" style="justify-content: space-between; align-items: baseline">
+            <div class="muted" id="yield"></div>
+            <div class="muted">Skalierungsfaktor: <span id="scale" class="pill">1.0×</span></div>
+          </div>
+          <ul id="ingredients"></ul>
+        </div>
+        <div class="section">
+          <h3>Geräte</h3>
+          <ul id="equipment"></ul>
+        </div>
+        <div class="section">
+          <h3>Schritte (Vollansicht)</h3>
+          <ol id="steps"></ol>
+        </div>
+      </section>
+
+      <aside class="card">
+        <div class="toolbar">
+          <div class="row">
+            <span class="pill">Schritt‑für‑Schritt</span>
+          </div>
+          <div class="row">
+            <span class="progress" id="progress">—</span>
+          </div>
+        </div>
+        <div class="stepper">
+          <img id="stepImage" class="img hidden" alt="Schrittbild" />
+          <div id="stepText" class="step">Kein Rezept geladen.</div>
+          <div class="row">
+            <button id="prev">Zurück</button>
+            <button id="next" class="primary">Weiter</button>
+          </div>
+          <div class="row">
+            <button id="showAll" class="ghost">Alle Schritte zeigen</button>
+            <button id="copyList" class="ghost">Einkaufsliste kopieren</button>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+  </div>
+
+<script>
+// Utility: parse number at start (supports "1/2", "1,5", "1.5")
+function parseLeadingQuantity(text) {
+  const t = text.trim();
+  // match: optional number with comma/dot or fraction at start
+  const m = t.match(/^((\d+[\.,]\d+)|(\d+\/\d+)|(\d+))\s+/);
+  if (!m) return { amount: null, rest: t };
+  let raw = m[1];
+  let amount = null;
+  if (raw.includes('/')) {
+    const [a,b] = raw.split('/').map(Number);
+    if (b && b !== 0) amount = a / b; else amount = Number(a) || null;
+  } else {
+    amount = Number(raw.replace(',', '.'));
+  }
+  const rest = t.slice(m[0].length);
+  return { amount, rest };
+}
+
+function formatAmount(x) {
+  if (x == null || isNaN(x)) return '';
+  const rounded = Math.round(x * 100) / 100;
+  // use comma for German
+  return String(rounded).replace('.', ',');
+}
+
+function extractArray(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  return [val];
+}
+
+function slugifyTitle(t) {
+  if (!t) return '';
+  return String(t)
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue')
+    .replace(/Ä/g,'Ae').replace(/Ö/g,'Oe').replace(/Ü/g,'Ue').replace(/ß/g,'ss')
+    .replace(/[^A-Za-z0-9]+/g,'_')
+    .replace(/^_+|_+$/g,'');
+}
+
+function loadImageWithFallback(imgEl, candidates) {
+  let i = 0;
+  const tryNext = () => {
+    if (i >= candidates.length) { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); return; }
+    const src = candidates[i++];
+    if (!src) return tryNext();
+    const tester = new Image();
+    tester.onload = () => { imgEl.src = src; imgEl.classList.remove('hidden'); };
+    tester.onerror = tryNext;
+    tester.src = src;
+  };
+  tryNext();
+}
+
+// NOTE: Folder picker removed. We now resolve step/main images by convention: JSON path as-is, plus ./<slug>/{file}, ./<slug>/images/{file}, ./<slug>/media/{file}, ../<slug>/{file}, and basename.
+function candidateImagePaths(p, recipeName) {
+  const out = [];
+  if (!p) return out;
+  const isAbs = /^https?:\/\//i.test(p) || /^blob:/i.test(p) || /^data:/i.test(p);
+  const slug = slugifyTitle(recipeName || '');
+  // as-is first
+  out.push(p);
+  // common folder guesses relative to the HTML file
+  if (slug) {
+    out.push('./' + slug + '/' + p);
+    out.push('./' + slug + '/images/' + p);
+    out.push('./' + slug + '/media/' + p);
+    out.push('../' + slug + '/' + p);
+  }
+  // basename fallback
+  const base = p.split('/').pop();
+  if (base && base !== p) {
+    out.push(base);
+    if (slug) {
+      out.push('./' + slug + '/' + base);
+      out.push('../' + slug + '/' + base);
+    }
+  }
+  return Array.from(new Set(out));
+}
+
+// Map for local files selected via folder picker (basename -> object URL)
+const fileIndex = new Map();
+
+function resolveImagePath(p) {
+  if (!p) return '';
+  if (typeof p !== 'string') return '';
+  // If absolute URL
+  if (/^https?:\/\//i.test(p)) return p;
+  // If a local file matches
+  if (fileIndex.has(p)) return fileIndex.get(p);
+  // Also try basename if path contains subfolders
+  const base = p.split('/').pop();
+  if (fileIndex.has(base)) return fileIndex.get(base);
+  // Fallback to given path (relative to HTML)
+  return p;
+}
+
+function loadStepImage(imgEl, stepImage, recipeName, index) {
+  imgEl.onload = () => { imgEl.classList.remove('hidden'); };
+  imgEl.onerror = () => { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); };
+  const declared = typeof stepImage === 'string' ? stepImage : (stepImage && (stepImage.url || stepImage.contentUrl)) || '';
+  const defaults = [`step${index}.jpg`];
+  const candidates = [];
+  // Try resolveImagePath first (object URLs or direct matches from folder picker)
+  [declared, ...defaults].forEach(p => {
+    if (!p) return;
+    const r = resolveImagePath(p);
+    if (r) candidates.push(r);
+    candidateImagePaths(p, recipeName).forEach(c => candidates.push(c));
+  });
+  loadImageWithFallback(imgEl, Array.from(new Set(candidates)));
+}
+
+function formatDuration(iso) {
+  if (!iso || typeof iso !== 'string') return '';
+  const m = iso.match(/^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/);
+  if (!m) return iso;
+  const days = m[1] ? parseInt(m[1], 10) : 0;
+  const hours = m[2] ? parseInt(m[2], 10) : 0;
+  const mins = m[3] ? parseInt(m[3], 10) : 0;
+  const secs = m[4] ? parseInt(m[4], 10) : 0;
+  const parts = [];
+  if (days) parts.push(days + ' Tg');
+  if (hours) parts.push(hours + ' Std');
+  if (mins) parts.push(mins + ' Min');
+  if (secs && !mins && !hours && !days) parts.push(secs + ' s');
+  return parts.join(' ') || iso;
+}
+
+function asPlainText(step) {
+  if (!step) return '';
+  if (typeof step === 'string') return step;
+  if (step.text) return step.text;
+  if (step.name && step.text) return step.name + ': ' + step.text;
+  if (step.itemListElement) {
+    return step.itemListElement.map(asPlainText).join('\n');
+  }
+  return JSON.stringify(step);
+}
+
+let current = {
+  recipe: null,
+  steps: [],
+  idx: 0,
+  baseYield: null
+};
+
+function numberFromYield(y) {
+  if (!y) return null;
+  const m = String(y).match(/\d+[\.,]?\d*/);
+  return m ? Number(m[0].replace(',', '.')) : null;
+}
+
+function rebuild(recipe) {
+  current.recipe = recipe;
+  document.getElementById('title').textContent = recipe.name || 'Unbenanntes Rezept';
+
+  // image
+  const imgEl = document.getElementById('image');
+  imgEl.onload = () => { imgEl.classList.remove('hidden'); };
+  imgEl.onerror = () => { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); };
+  const images = extractArray(recipe.image);
+  if (images.length) {
+    const firstVal = images[0];
+    const first = typeof firstVal === 'string' ? firstVal : (firstVal.url || firstVal.contentUrl || '');
+    // Try local file index first
+    const indexed = resolveImagePath(first);
+    if (indexed && indexed !== first) {
+      imgEl.src = indexed; // already an object URL or absolute
+    } else {
+      const cands = candidateImagePaths(first, recipe.name);
+      loadImageWithFallback(imgEl, cands);
+    }
+  } else {
+    imgEl.classList.add('hidden');
+  }
+
+  // meta chips
+  const chips = document.getElementById('metaChips');
+  chips.innerHTML = '';
+  const addChip = (txt) => { const s = document.createElement('span'); s.className='chip'; s.textContent = txt; chips.appendChild(s); };
+  if (recipe.totalTime) addChip('Gesamt: ' + formatDuration(recipe.totalTime));
+  if (recipe.prepTime) addChip('Vorbereitung: ' + formatDuration(recipe.prepTime));
+  if (recipe.cookTime) addChip('Kochen: ' + formatDuration(recipe.cookTime));
+  if (recipe.recipeCuisine) addChip(recipe.recipeCuisine);
+  if (recipe.keywords) extractArray(recipe.keywords).forEach(k=>addChip(k));
+
+  // yield / servings
+  const yieldEl = document.getElementById('yield');
+  yieldEl.textContent = recipe.recipeYield ? String(recipe.recipeYield) : '';
+  current.baseYield = numberFromYield(recipe.recipeYield) || Number(document.getElementById('servings').value) || 1;
+
+  // ingredients with scaling
+  fillIngredients();
+
+  // equipment
+  const eq = document.getElementById('equipment');
+  eq.innerHTML = '';
+  const tools = [].concat(extractArray(recipe.tool), extractArray(recipe.equipment), extractArray(recipe.supplies));
+  tools.filter(Boolean).forEach(t => {
+    const li = document.createElement('li');
+    if (typeof t === 'string') li.textContent = t; else li.textContent = t.name || t.text || JSON.stringify(t);
+    eq.appendChild(li);
+  });
+
+  // steps (full)
+  const steps = [];
+  if (Array.isArray(recipe.recipeInstructions)) {
+    recipe.recipeInstructions.forEach((s, idx0) => {
+      const index = idx0 + 1;
+      if (s && s['@type'] === 'HowToSection' && Array.isArray(s.itemListElement)) {
+        s.itemListElement.forEach((sub, jdx) => {
+          const txt = asPlainText(sub);
+          if (txt) {
+            const img = (sub && typeof sub === 'object') ? (sub.image || null) : null;
+            steps.push({ text: txt, image: img });
+          }
+        });
+      } else {
+        const txt = asPlainText(s);
+        if (txt) {
+          const img = (s && typeof s === 'object') ? (s.image || null) : null;
+          steps.push({ text: txt, image: img });
+        }
+      }
+    });
+  } else if (typeof recipe.recipeInstructions === 'string') {
+    recipe.recipeInstructions.split(/\n+|\r+/).forEach((t) => { if (t.trim()) steps.push({ text: t.trim(), image: null }); });
+  }
+  current.steps = steps;
+  current.idx = 0;
+
+  const stepsEl = document.getElementById('steps');
+  stepsEl.innerHTML = '';
+  current.steps.forEach((stepObj, i) => {
+    const li = document.createElement('li');
+    // optional image per step
+    if (stepObj.image) {
+      const img = document.createElement('img');
+      img.className = 'img';
+      img.alt = `Schritt ${i+1}`;
+      // setup hide-on-error
+      img.onerror = () => { img.classList.add('hidden'); img.removeAttribute('src'); };
+      // try resolve + fallbacks
+      const declared = typeof stepObj.image === 'string' ? stepObj.image : (stepObj.image.url || stepObj.image.contentUrl || '');
+      const r = resolveImagePath(declared);
+      const cands = [];
+      if (r) cands.push(r);
+      candidateImagePaths(declared || `step${i+1}.jpg`, recipe.name).forEach(c => cands.push(c));
+      loadImageWithFallback(img, Array.from(new Set(cands)));
+      li.appendChild(img);
+    } else {
+      // also try default filename stepN.jpg if no image declared
+      const img = document.createElement('img');
+      img.className = 'img hidden';
+      img.alt = `Schritt ${i+1}`;
+      loadStepImage(img, `step${i+1}.jpg`, recipe.name, i+1);
+      li.appendChild(img);
+    }
+    const p = document.createElement('div');
+    p.textContent = stepObj.text;
+    li.appendChild(p);
+    stepsEl.appendChild(li);
+  });
+
+  // stepper
+  refreshStepper();
+}
+
+function fillIngredients() {
+  const list = document.getElementById('ingredients');
+  list.innerHTML = '';
+  const sInput = document.getElementById('servings');
+  const desired = Number(sInput.value) || 1;
+  const base = current.baseYield || desired;
+  const scale = desired / base;
+  document.getElementById('scale').textContent = (Math.round(scale*100)/100) + '×';
+  const ingr = extractArray(current.recipe?.recipeIngredient);
+  if (!ingr.length) return;
+  ingr.forEach(raw => {
+    let line = String(raw);
+    const { amount, rest } = parseLeadingQuantity(line);
+    if (amount != null) {
+      const scaled = amount * scale;
+      const li = document.createElement('li');
+      li.textContent = `${formatAmount(scaled)} ${rest}`.trim();
+      list.appendChild(li);
+    } else {
+      const li = document.createElement('li');
+      li.textContent = line; // cannot scale unknown format
+      list.appendChild(li);
+    }
+  });
+}
+
+function refreshStepper() {
+  const stepEl = document.getElementById('stepText');
+  const prog = document.getElementById('progress');
+  const imgEl = document.getElementById('stepImage');
+  const total = current.steps.length;
+  if (!total) { stepEl.textContent = 'Keine Schritte gefunden.'; prog.textContent = '—'; if (imgEl) { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); } return; }
+  const idx = Math.max(0, Math.min(current.idx, total-1));
+  current.idx = idx;
+  const stepObj = current.steps[idx];
+  stepEl.textContent = stepObj.text;
+  prog.textContent = `Schritt ${idx+1} / ${total}`;
+  if (imgEl) {
+    loadStepImage(imgEl, stepObj.image || `step${idx+1}.jpg`, current.recipe?.name || '', idx+1);
+  }
+}
+
+// Events
+const fileInput = document.getElementById('file');
+fileInput.addEventListener('change', async (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+  const text = await file.text();
+  let obj = null;
+  try { obj = JSON.parse(text); } catch (err) { alert('Keine gültige JSON-Datei.'); return; }
+  // JSON‑LD auf der Seite enthält häufig einen @graph – versuche Recipe zu finden
+  if (obj['@graph']) {
+    const rec = obj['@graph'].find(x => x['@type'] === 'Recipe');
+    if (rec) obj = rec;
+  }
+  if (obj['@type'] !== 'Recipe') {
+    // manchmal ist @type ein Array
+    const t = Array.isArray(obj['@type']) ? obj['@type'] : [obj['@type']];
+    if (!t.includes('Recipe')) { alert('Kein schema.org Recipe gefunden.'); return; }
+  }
+  rebuild(obj);
+});
+
+// servings scale listener
+const servingsInput = document.getElementById('servings');
+servingsInput.addEventListener('input', () => { fillIngredients(); });
+
+// stepper controls
+const btnPrev = document.getElementById('prev');
+const btnNext = document.getElementById('next');
+btnPrev.addEventListener('click', () => { current.idx = Math.max(0, current.idx - 1); refreshStepper(); });
+btnNext.addEventListener('click', () => { current.idx = Math.min((current.steps.length-1), current.idx + 1); refreshStepper(); });
+
+// show all steps button: scroll to list
+const btnShowAll = document.getElementById('showAll');
+btnShowAll.addEventListener('click', () => {
+  document.querySelector('#steps')?.scrollIntoView({ behavior: 'smooth' });
+});
+
+// copy shopping list
+const btnCopy = document.getElementById('copyList');
+btnCopy.addEventListener('click', async () => {
+  const items = Array.from(document.querySelectorAll('#ingredients li')).map(li => '• ' + li.textContent);
+  const text = 'Einkaufsliste\n\n' + items.join('\n');
+  try { await navigator.clipboard.writeText(text); alert('Einkaufsliste kopiert.'); } catch { alert('Kopieren nicht möglich.'); }
+});
+
+// toggle mode (focus stepper by hiding full steps)
+const btnMode = document.getElementById('toggleMode');
+btnMode.addEventListener('click', () => {
+  const full = document.querySelector('section.card');
+  const aside = document.querySelector('aside.card');
+  if (full.style.display === 'none') {
+    full.style.display = '';
+    btnMode.textContent = 'Schrittmodus';
+  } else {
+    full.style.display = 'none';
+    btnMode.textContent = 'Vollansicht';
+    aside.scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+
+</script>
+</body>
+</html>
