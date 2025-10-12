@@ -438,6 +438,23 @@ function refreshStepper() {
   }
 }
 
+// Pantry-Basisliste: Zutaten, die nicht auf die Einkaufsliste kopiert werden sollen
+const pantryItems = [
+  'salz', 'pfeffer', 'zucker', 'vanillezucker', 'honig', 'backpulver', 'natron', 'speisestärke',
+  'mehl', 'paniermehl', 'essig', 'öl', 'senf', 'ketchup', 'mayonnaise', 'sojasauce', 'brühe',
+  'fond', 'tomatenmark', 'reis', 'nudeln', 'haferflocken', 'semmelbrösel', 'hefe', 'kakao',
+  'marmelade', 'knoblauch', 'zwiebel', 'zwiebeln', 'zitronensaft', 'pfeffermühle',
+  'paprika', 'curry', 'kreuzkümmel', 'zimt', 'oregano', 'basilikum', 'thymian', 'chili', 'wasser'
+];
+
+function isPantryItem(ingredientLine) {
+  const clean = ingredientLine.toLowerCase()
+    .replace(/[^a-zäöüß0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return pantryItems.some(word => clean.includes(word));
+}
+
 // Events
 const filesInput = document.getElementById('files');
 filesInput.addEventListener('change', async (e) => {
@@ -499,8 +516,11 @@ btnShowAll.addEventListener('click', () => {
 // copy shopping list
 const btnCopy = document.getElementById('copyList');
 btnCopy.addEventListener('click', async () => {
-  const items = Array.from(document.querySelectorAll('#ingredients li')).map(li => '• ' + li.textContent);
-  const text = 'Einkaufsliste\n\n' + items.join('\n');
+  const items = Array.from(document.querySelectorAll('#ingredients li'))
+    .map(li => li.textContent.trim())
+    .filter(txt => txt && !isPantryItem(txt));
+
+  const text = items.join(', ');
   try { await navigator.clipboard.writeText(text); alert('Einkaufsliste kopiert.'); } catch { alert('Kopieren nicht möglich.'); }
 });
 
