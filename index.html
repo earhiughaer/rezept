@@ -1,8 +1,3 @@
-Gerne, hier ist der gesamte HTML-Code mit der Überschrift "Nährwerte" korrigiert zu **"Nährwerte pro Portion"** und dem Button **"Einkaufsliste kopieren"** in den Header verschoben.
-
-Die Änderungen betreffen die Zeilen **49 (Button hinzugefügt)**, **96 (Überschrift geändert)** und die Entfernung des Buttons aus Zeile **127**.
-
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -10,745 +5,742 @@ Die Änderungen betreffen die Zeilen **49 (Button hinzugefügt)**, **96 (Übersc
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Rezepte Viewer (JSON‑LD)</title>
 <style>
-  :root {
-    --bg: #ffffff;
-    --card: #ffffff;
-    --text: #0b0c10;
-    --muted: #445069;
-    --accent: #0b5cff;
-    --border: #e6e8ef;
-  }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
-  a { color: var(--accent); }
-  .wrap { max-width: 920px; margin: 0 auto; padding: 16px; }
-  header { display: grid; gap: 12px; margin-bottom: 16px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
-  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
-  input[type="number"], input[type="text"], button, select { background: #ffffff; color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; font-size: 16px; }
-  button { cursor: pointer; }
-  button.primary { background: var(--accent); color: #ffffff; border: none; }
-  button.ghost { background: transparent; color: var(--accent); }
-  .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
-  @media (min-width: 860px) { .grid { grid-template-columns: 1.2fr .8fr; } }
-  .title { font-size: 28px; font-weight: 700; }
-  .muted { color: var(--muted); }
-  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
-  .chip { background:#f6f7fb; border:1px solid var(--border); padding: 6px 10px; border-radius: 999px; font-size: 13px; }
-  .img { width: 100%; border-radius: 14px; display: block; border:1px solid var(--border); object-fit: cover; max-height: 360px; }
-  ul, ol { margin: 0; padding-left: 18px; }
-  .section h3 { margin: 10px 0 6px; font-size: 16px; }
-  .toolbar { display:flex; gap:8px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
-  .toolbar .row { gap:8px; }
-  .stepper { display: grid; gap: 10px; }
-  .step { font-size: 20px; line-height: 1.5; }
-  .progress { font-size: 14px; color: var(--muted); }
-  .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; color: var(--muted); }
-  .pill { padding: 2px 8px; border-radius: 999px; border:1px solid var(--border); background:#f6f7fb; }
-  .hidden { display:none; }
-  .notice { font-size: 14px; color: var(--muted); }
-  .spacer { height:6px; }
+  :root {
+    --bg: #ffffff;
+    --card: #ffffff;
+    --text: #0b0c10;
+    --muted: #445069;
+    --accent: #0b5cff;
+    --border: #e6e8ef;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+  a { color: var(--accent); }
+  .wrap { max-width: 920px; margin: 0 auto; padding: 16px; }
+  header { display: grid; gap: 12px; margin-bottom: 16px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 14px; box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+  .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  input[type="number"], input[type="text"], button, select { background: #ffffff; color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; font-size: 16px; }
+  button { cursor: pointer; }
+  button.primary { background: var(--accent); color: #ffffff; border: none; }
+  button.ghost { background: transparent; color: var(--accent); }
+  .grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 860px) { .grid { grid-template-columns: 1.2fr .8fr; } }
+  .title { font-size: 28px; font-weight: 700; }
+  .muted { color: var(--muted); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip { background:#f6f7fb; border:1px solid var(--border); padding: 6px 10px; border-radius: 999px; font-size: 13px; }
+  .img { width: 100%; border-radius: 14px; display: block; border:1px solid var(--border); object-fit: cover; max-height: 360px; }
+  ul, ol { margin: 0; padding-left: 18px; }
+  .section h3 { margin: 10px 0 6px; font-size: 16px; }
+  .toolbar { display:flex; gap:8px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+  .toolbar .row { gap:8px; }
+  .stepper { display: grid; gap: 10px; }
+  .step { font-size: 20px; line-height: 1.5; }
+  .progress { font-size: 14px; color: var(--muted); }
+  .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 13px; color: var(--muted); }
+  .pill { padding: 2px 8px; border-radius: 999px; border:1px solid var(--border); background:#f6f7fb; }
+  .hidden { display:none; }
+  .notice { font-size: 14px; color: var(--muted); }
+  .spacer { height:6px; }
 
-  .step, #steps li div {
-    margin-top: 12px;
-    margin-bottom: 12px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
+  .step, #steps li div {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <header class="card">
-      <div class="row">
-        <div class="title" id="title">Rezepte Viewer</div>
-      </div>
-      <div class="row">
-        <input id="files" type="file" accept=".json,.jsonld,application/json,image/*" multiple />
-        <button class="ghost" id="toggleMode" title="Schrittmodus / Vollansicht umschalten">Schrittmodus</button>
-        <div class="row">
-          <label class="kbd">Portionen</label>
-          <input id="servings" type="number" min="1" step="0.5" value="2" style="width:110px" />
-          <span id="scale" class="pill">×1,0</span>
-        </div>
-        <div class="muted" id="originalYield"></div>
-      </div>
-      <div class="row">
-        <button id="copyList" class="ghost">Einkaufsliste kopieren</button>
-      </div>
-    </header>
+  <div class="wrap">
+    <header class="card">
+      <div class="row">
+        <div class="title" id="title">Rezepte Viewer</div>
+      </div>
+      <div class="row">
+        <input id="files" type="file" accept=".json,.jsonld,application/json,image/*" multiple />
+        <button class="ghost" id="toggleMode" title="Schrittmodus / Vollansicht umschalten">Schrittmodus</button>
+        <div class="row">
+          <label class="kbd">Portionen</label>
+          <input id="servings" type="number" min="1" step="0.5" value="2" style="width:110px" />
+          <span id="scale" class="pill">×1,0</span>
+        </div>
+        <div class="muted" id="originalYield"></div>
+      </div>
+    </header>
 
-    <main class="grid">
-      <section class="card">
-        <img id="image" class="img hidden" alt="Rezeptbild" />
-        <div class="spacer"></div>
-        <div class="chips" id="metaChips"></div>
-        <div class="section">
-          <h3>Zutaten</h3>
-                    <ul id="ingredients"></ul>
-        </div>
-        <div class="section">
-          <h3>Nährwerte pro Portion</h3>
-          <div id="nutrition" class="muted">Keine Daten verfügbar</div>
-        </div>
-        <div class="section">
-          <h3>Utensilien</h3>
-          <div id="equipment"></div>
-        </div>
-        <div class="section">
-          <h3>Schritte (Vollansicht)</h3>
-          <ol id="steps"></ol>
-        </div>
-      </section>
+    <main class="grid">
+      <section class="card">
+        <img id="image" class="img hidden" alt="Rezeptbild" />
+        <div class="spacer"></div>
+        <div class="chips" id="metaChips"></div>
+        <div class="section">
+          <h3>Zutaten</h3>
+          <!-- Zeile für yield und scale entfernt, originalYield verschoben -->
+          <ul id="ingredients"></ul>
+        </div>
+        <div class="section">
+          <h3>Nährwerte pro Portion</h3>
+          <div id="nutrition" class="muted">Keine Daten verfügbar</div>
+        </div>
+        <div class="section">
+          <h3>Utensilien</h3>
+          <div id="equipment"></div>
+        </div>
+        <div class="section">
+          <h3>Schritte (Vollansicht)</h3>
+          <ol id="steps"></ol>
+        </div>
+      </section>
 
-      <aside class="card">
-        <div class="toolbar">
-          <div class="row">
-                     </div>
-          <div class="row">
-            <span class="progress" id="progress">—</span>
-          </div>
-        </div>
-        <div class="stepper">
-          <img id="stepImage" class="img hidden" alt="Schrittbild" />
-          <div id="stepText" class="step">Kein Rezept geladen.</div>
-          <div class="row">
-            <button id="prev">Zurück</button>
-            <button id="next" class="primary">Weiter</button>
-          </div>
-          <div class="row">
-            <button id="showAll" class="ghost">Alle Schritte zeigen</button>
-          </div>
-        </div>
-      </aside>
-    </main>
+      <aside class="card">
+        <div class="toolbar">
+          <div class="row">
+           <!--  <span class="pill">Schritt‑für‑Schritt</span>-->
+          </div>
+          <div class="row">
+            <span class="progress" id="progress">—</span>
+          </div>
+        </div>
+        <div class="stepper">
+          <img id="stepImage" class="img hidden" alt="Schrittbild" />
+          <div id="stepText" class="step">Kein Rezept geladen.</div>
+          <div class="row">
+            <button id="prev">Zurück</button>
+            <button id="next" class="primary">Weiter</button>
+          </div>
+          <div class="row">
+            <button id="showAll" class="ghost">Alle Schritte zeigen</button>
+            <button id="copyList" class="ghost">Einkaufsliste kopieren</button>
+          </div>
+        </div>
+      </aside>
+    </main>
 
-  </div>
+  </div>
 
 <script>
 // Utility: parse number at start (supports "1/2", "1,5", "1.5")
 function parseLeadingQuantity(text) {
-  const t = text.trim();
-  // match: optional number with comma/dot or fraction at start
-  const m = t.match(/^((\d+[\.,]\d+)|(\d+\/\d+)|(\d+))\s+/);
-  if (!m) return { amount: null, rest: t };
-  let raw = m[1];
-  let amount = null;
-  if (raw.includes('/')) {
-    const [a,b] = raw.split('/').map(Number);
-    if (b && b !== 0) amount = a / b; else amount = Number(a) || null;
-  } else {
-    amount = Number(raw.replace(',', '.'));
-  }
-  const rest = t.slice(m[0].length);
-  return { amount, rest };
+  const t = text.trim();
+  // match: optional number with comma/dot or fraction at start
+  const m = t.match(/^((\d+[\.,]\d+)|(\d+\/\d+)|(\d+))\s+/);
+  if (!m) return { amount: null, rest: t };
+  let raw = m[1];
+  let amount = null;
+  if (raw.includes('/')) {
+    const [a,b] = raw.split('/').map(Number);
+    if (b && b !== 0) amount = a / b; else amount = Number(a) || null;
+  } else {
+    amount = Number(raw.replace(',', '.'));
+  }
+  const rest = t.slice(m[0].length);
+  return { amount, rest };
 }
 
 function formatAmount(x) {
-  if (x == null || isNaN(x)) return '';
-  const rounded = Math.round(x * 100) / 100;
-  // use comma for German
-  return String(rounded).replace('.', ',');
+  if (x == null || isNaN(x)) return '';
+  const rounded = Math.round(x * 100) / 100;
+  // use comma for German
+  return String(rounded).replace('.', ',');
 }
 
 function formatFactor(x) {
-  if (!x || isNaN(x)) return '×1,0';
-  const rounded = Math.round(x * 100) / 100;
-  const str = String(rounded).replace('.', ',');
-  return '×' + str;
+  if (!x || isNaN(x)) return '×1,0';
+  const rounded = Math.round(x * 100) / 100;
+  const str = String(rounded).replace('.', ',');
+  return '×' + str;
 }
 
 function extractArray(val) {
-  if (!val) return [];
-  if (Array.isArray(val)) return val;
-  return [val];
+  if (!val) return [];
+  if (Array.isArray(val)) return val;
+  return [val];
 }
 
 function slugifyTitle(t) {
-  if (!t) return '';
-  return String(t)
-    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue')
-    .replace(/Ä/g,'Ae').replace(/Ö/g,'Oe').replace(/Ü/g,'Ue').replace(/ß/g,'ss')
-    .replace(/[^A-Za-z0-9]+/g,'_')
-    .replace(/^_+|_+$/g,'');
+  if (!t) return '';
+  return String(t)
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue')
+    .replace(/Ä/g,'Ae').replace(/Ö/g,'Oe').replace(/Ü/g,'Ue').replace(/ß/g,'ss')
+    .replace(/[^A-Za-z0-9]+/g,'_')
+    .replace(/^_+|_+$/g,'');
 }
 
 function loadImageWithFallback(imgEl, candidates) {
-  let i = 0;
-  const tryNext = () => {
-    if (i >= candidates.length) { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); return; }
-    const src = candidates[i++];
-    if (!src) return tryNext();
-    const tester = new Image();
-    tester.onload = () => { imgEl.src = src; imgEl.classList.remove('hidden'); };
-    tester.onerror = tryNext;
-    tester.src = src;
-  };
-  tryNext();
+  let i = 0;
+  const tryNext = () => {
+    if (i >= candidates.length) { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); return; }
+    const src = candidates[i++];
+    if (!src) return tryNext();
+    const tester = new Image();
+    tester.onload = () => { imgEl.src = src; imgEl.classList.remove('hidden'); };
+    tester.onerror = tryNext;
+    tester.src = src;
+  };
+  tryNext();
 }
 
 // NOTE: Folder picker removed. We now resolve step/main images by convention: JSON path as-is, plus ./<slug>/{file}, ./<slug>/images/{file}, ./<slug>/media/{file}, ../<slug>/{file}, and basename.
 function candidateImagePaths(p, recipeName) {
-  const out = [];
-  if (!p) return out;
-  const isAbs = /^https?:\/\//i.test(p) || /^blob:/i.test(p) || /^data:/i.test(p);
-  const slug = slugifyTitle(recipeName || '');
-  // as-is first
-  out.push(p);
-  // common folder guesses relative to the HTML file
-  if (slug) {
-    out.push('./' + slug + '/' + p);
-    out.push('./' + slug + '/images/' + p);
-    out.push('./' + slug + '/media/' + p);
-    out.push('../' + slug + '/' + p);
-  }
-  // basename fallback
-  const base = p.split('/').pop();
-  if (base && base !== p) {
-    out.push(base);
-    if (slug) {
-      out.push('./' + slug + '/' + base);
-      out.push('../' + slug + '/' + base);
-    }
-  }
-  return Array.from(new Set(out));
+  const out = [];
+  if (!p) return out;
+  const isAbs = /^https?:\/\//i.test(p) || /^blob:/i.test(p) || /^data:/i.test(p);
+  const slug = slugifyTitle(recipeName || '');
+  // as-is first
+  out.push(p);
+  // common folder guesses relative to the HTML file
+  if (slug) {
+    out.push('./' + slug + '/' + p);
+    out.push('./' + slug + '/images/' + p);
+    out.push('./' + slug + '/media/' + p);
+    out.push('../' + slug + '/' + p);
+  }
+  // basename fallback
+  const base = p.split('/').pop();
+  if (base && base !== p) {
+    out.push(base);
+    if (slug) {
+      out.push('./' + slug + '/' + base);
+      out.push('../' + slug + '/' + base);
+    }
+  }
+  return Array.from(new Set(out));
 }
 
 // Map for local files selected via folder picker (basename -> object URL)
 const fileIndex = new Map();
 
 function indexSelectedImages(fileList) {
-  fileIndex.clear();
-  for (const f of fileList) {
-    const url = URL.createObjectURL(f);
-    fileIndex.set(f.name, url);
-  }
+  fileIndex.clear();
+  for (const f of fileList) {
+    const url = URL.createObjectURL(f);
+    fileIndex.set(f.name, url);
+  }
 }
 
 function resolveImagePath(p) {
-  if (!p) return '';
-  if (typeof p !== 'string') return '';
-  // If absolute URL
-  if (/^https?:\/\//i.test(p)) return p;
-  // If a local file matches
-  if (fileIndex.has(p)) return fileIndex.get(p);
-  // Also try basename if path contains subfolders
-  const base = p.split('/').pop();
-  if (fileIndex.has(base)) return fileIndex.get(base);
-  // Fallback to given path (relative to HTML)
-  return p;
+  if (!p) return '';
+  if (typeof p !== 'string') return '';
+  // If absolute URL
+  if (/^https?:\/\//i.test(p)) return p;
+  // If a local file matches
+  if (fileIndex.has(p)) return fileIndex.get(p);
+  // Also try basename if path contains subfolders
+  const base = p.split('/').pop();
+  if (fileIndex.has(base)) return fileIndex.get(base);
+  // Fallback to given path (relative to HTML)
+  return p;
 }
 
 function loadStepImage(imgEl, stepImage, recipeName, index) {
-  imgEl.onload = () => { imgEl.classList.remove('hidden'); };
-  imgEl.onerror = () => { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); };
-  const declared = typeof stepImage === 'string' ? stepImage : (stepImage && (stepImage.url || stepImage.contentUrl)) || '';
-  const defaults = [`step${index}.jpg`];
-  const candidates = [];
-  // Try resolveImagePath first (object URLs or direct matches from folder picker)
-  [declared, ...defaults].forEach(p => {
-    if (!p) return;
-    const r = resolveImagePath(p);
-    if (r) candidates.push(r);
-    candidateImagePaths(p, recipeName).forEach(c => candidates.push(c));
-  });
-  loadImageWithFallback(imgEl, Array.from(new Set(candidates)));
+  imgEl.onload = () => { imgEl.classList.remove('hidden'); };
+  imgEl.onerror = () => { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); };
+  const declared = typeof stepImage === 'string' ? stepImage : (stepImage && (stepImage.url || stepImage.contentUrl)) || '';
+  const defaults = [`step${index}.jpg`];
+  const candidates = [];
+  // Try resolveImagePath first (object URLs or direct matches from folder picker)
+  [declared, ...defaults].forEach(p => {
+    if (!p) return;
+    const r = resolveImagePath(p);
+    if (r) candidates.push(r);
+    candidateImagePaths(p, recipeName).forEach(c => candidates.push(c));
+  });
+  loadImageWithFallback(imgEl, Array.from(new Set(candidates)));
 }
 
 function formatDuration(iso) {
-  if (!iso || typeof iso !== 'string') return '';
-  const m = iso.match(/^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/);
-  if (!m) return iso;
-  const days = m[1] ? parseInt(m[1], 10) : 0;
-  const hours = m[2] ? parseInt(m[2], 10) : 0;
-  const mins = m[3] ? parseInt(m[3], 10) : 0;
-  const secs = m[4] ? parseInt(m[4], 10) : 0;
-  const parts = [];
-  if (days) parts.push(days + ' Tg');
-  if (hours) parts.push(hours + ' Std');
-  if (mins) parts.push(mins + ' Min');
-  if (secs && !mins && !hours && !days) parts.push(secs + ' s');
-  return parts.join(' ') || iso;
+  if (!iso || typeof iso !== 'string') return '';
+  const m = iso.match(/^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/);
+  if (!m) return iso;
+  const days = m[1] ? parseInt(m[1], 10) : 0;
+  const hours = m[2] ? parseInt(m[2], 10) : 0;
+  const mins = m[3] ? parseInt(m[3], 10) : 0;
+  const secs = m[4] ? parseInt(m[4], 10) : 0;
+  const parts = [];
+  if (days) parts.push(days + ' Tg');
+  if (hours) parts.push(hours + ' Std');
+  if (mins) parts.push(mins + ' Min');
+  if (secs && !mins && !hours && !days) parts.push(secs + ' s');
+  return parts.join(' ') || iso;
 }
 
 function asPlainText(step) {
-  if (!step) return '';
-  if (typeof step === 'string') return step;
-  if (step.text) return step.text;
-  if (step.name && step.text) return step.name + ': ' + step.text;
-  if (step.itemListElement) {
-    return step.itemListElement.map(asPlainText).join('\n');
-  }
-  return JSON.stringify(step);
+  if (!step) return '';
+  if (typeof step === 'string') return step;
+  if (step.text) return step.text;
+  if (step.name && step.text) return step.name + ': ' + step.text;
+  if (step.itemListElement) {
+    return step.itemListElement.map(asPlainText).join('\n');
+  }
+  return JSON.stringify(step);
 }
 
 let current = {
-  recipe: null,
-  steps: [],
-  idx: 0,
-  baseYield: null
+  recipe: null,
+  steps: [],
+  idx: 0,
+  baseYield: null
 };
 
 function numberFromYield(y) {
-  if (!y) return null;
-  const m = String(y).match(/\d+[\.,]?\d*/);
-  return m ? Number(m[0].replace(',', '.')) : null;
+  if (!y) return null;
+  const m = String(y).match(/\d+[\.,]?\d*/);
+  return m ? Number(m[0].replace(',', '.')) : null;
 }
 
 function parseISODurationToMinutes(iso) {
-  if (!iso || typeof iso !== 'string') return 0;
-  const m = iso.match(/^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/);
-  if (!m) return 0;
-  const days = m[1] ? parseInt(m[1], 10) : 0;
-  const hours = m[2] ? parseInt(m[2], 10) : 0;
-  const mins = m[3] ? parseInt(m[3], 10) : 0;
-  const secs = m[4] ? parseInt(m[4], 10) : 0;
-  return days * 24 * 60 + hours * 60 + mins + Math.round(secs / 60);
+  if (!iso || typeof iso !== 'string') return 0;
+  const m = iso.match(/^P(?:(\d+)D)?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?)?$/);
+  if (!m) return 0;
+  const days = m[1] ? parseInt(m[1], 10) : 0;
+  const hours = m[2] ? parseInt(m[2], 10) : 0;
+  const mins = m[3] ? parseInt(m[3], 10) : 0;
+  const secs = m[4] ? parseInt(m[4], 10) : 0;
+  return days * 24 * 60 + hours * 60 + mins + Math.round(secs / 60);
 }
 
 function rebuild(recipe) {
-  current.recipe = recipe;
-  document.getElementById('title').textContent = recipe.name || 'Unbenanntes Rezept';
+  current.recipe = recipe;
+  document.getElementById('title').textContent = recipe.name || 'Unbenanntes Rezept';
 
-  // image
-  const imgEl = document.getElementById('image');
-  imgEl.onload = () => { imgEl.classList.remove('hidden'); };
-  imgEl.onerror = () => { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); };
-  const images = extractArray(recipe.image);
-  if (images.length) {
-    const firstVal = images[0];
-    const first = typeof firstVal === 'string' ? firstVal : (firstVal.url || firstVal.contentUrl || '');
-    // Try local file index first
-    const indexed = resolveImagePath(first);
-    if (indexed && indexed !== first) {
-      imgEl.src = indexed; // already an object URL or absolute
-    } else {
-      const cands = candidateImagePaths(first, recipe.name);
-      loadImageWithFallback(imgEl, cands);
-    }
-  } else {
-    imgEl.classList.add('hidden');
-  }
+  // image
+  const imgEl = document.getElementById('image');
+  imgEl.onload = () => { imgEl.classList.remove('hidden'); };
+  imgEl.onerror = () => { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); };
+  const images = extractArray(recipe.image);
+  if (images.length) {
+    const firstVal = images[0];
+    const first = typeof firstVal === 'string' ? firstVal : (firstVal.url || firstVal.contentUrl || '');
+    // Try local file index first
+    const indexed = resolveImagePath(first);
+    if (indexed && indexed !== first) {
+      imgEl.src = indexed; // already an object URL or absolute
+    } else {
+      const cands = candidateImagePaths(first, recipe.name);
+      loadImageWithFallback(imgEl, cands);
+    }
+  } else {
+    imgEl.classList.add('hidden');
+  }
 
-  // meta chips
-  const chips = document.getElementById('metaChips');
-  chips.innerHTML = '';
-  const addChip = (txt) => { const s = document.createElement('span'); s.className='chip'; s.textContent = txt; chips.appendChild(s); };
-  const prep = recipe.prepTime ? formatDuration(recipe.prepTime) : '';
-  const cook = recipe.cookTime ? formatDuration(recipe.cookTime) : '';
+  // meta chips
+  const chips = document.getElementById('metaChips');
+  chips.innerHTML = '';
+  const addChip = (txt) => { const s = document.createElement('span'); s.className='chip'; s.textContent = txt; chips.appendChild(s); };
+  const prep = recipe.prepTime ? formatDuration(recipe.prepTime) : '';
+  const cook = recipe.cookTime ? formatDuration(recipe.cookTime) : '';
 
-  let totalDuration = recipe.totalTime ? formatDuration(recipe.totalTime) : '';
+  let totalDuration = recipe.totalTime ? formatDuration(recipe.totalTime) : '';
 
-  // Wenn totalTime fehlt oder kleiner als prep+cook ist → automatisch berechnen
-  if ((!recipe.totalTime && recipe.prepTime && recipe.cookTime) || (recipe.totalTime && recipe.prepTime && recipe.cookTime)) {
-    const totalMinutes = (parseISODurationToMinutes(recipe.prepTime) || 0) + (parseISODurationToMinutes(recipe.cookTime) || 0);
-    totalDuration = totalMinutes + ' Min';
-  }
+  // Wenn totalTime fehlt oder kleiner als prep+cook ist → automatisch berechnen
+  if ((!recipe.totalTime && recipe.prepTime && recipe.cookTime) || (recipe.totalTime && recipe.prepTime && recipe.cookTime)) {
+    const totalMinutes = (parseISODurationToMinutes(recipe.prepTime) || 0) + (parseISODurationToMinutes(recipe.cookTime) || 0);
+    totalDuration = totalMinutes + ' Min';
+  }
 
-  if (totalDuration) addChip('Gesamt: ' + totalDuration);
-  if (prep) addChip('Vorbereitung: ' + prep);
-  if (cook) addChip('Kochen: ' + cook);
-  if (recipe.recipeCuisine) addChip(recipe.recipeCuisine);
-  if (recipe.keywords) extractArray(recipe.keywords).forEach(k=>addChip(k));
+  if (totalDuration) addChip('Gesamt: ' + totalDuration);
+  if (prep) addChip('Vorbereitung: ' + prep);
+  if (cook) addChip('Kochen: ' + cook);
+  if (recipe.recipeCuisine) addChip(recipe.recipeCuisine);
+  if (recipe.keywords) extractArray(recipe.keywords).forEach(k=>addChip(k));
 
-  // yield / servings
-  current.baseYield = numberFromYield(recipe.recipeYield) || Number(document.getElementById('servings').value) || 1;
+  // yield / servings
+  current.baseYield = numberFromYield(recipe.recipeYield) || Number(document.getElementById('servings').value) || 1;
 
-  // originalYield display
-  const originalYieldEl = document.getElementById('originalYield');
-  if (recipe.recipeYield) {
-    originalYieldEl.textContent = `Originalrezept: ${recipe.recipeYield} Portionen`;
-  } else {
-    originalYieldEl.textContent = '';
-  }
+  // originalYield display
+  const originalYieldEl = document.getElementById('originalYield');
+  if (recipe.recipeYield) {
+    originalYieldEl.textContent = `Originalrezept: ${recipe.recipeYield} Portionen`;
+  } else {
+    originalYieldEl.textContent = '';
+  }
 
-  // ingredients with scaling
-  fillIngredients();
+  // ingredients with scaling
+  fillIngredients();
 
-  // equipment (now as a single comma-separated line)
-  const eq = document.getElementById('equipment');
-  eq.innerHTML = '';
-  const tools = [].concat(extractArray(recipe.tool), extractArray(recipe.equipment), extractArray(recipe.supplies));
-  const toolNames = tools.filter(Boolean).map(t => typeof t === 'string' ? t : (t.name || t.text || JSON.stringify(t)));
-  if (toolNames.length) {
-    const toolLine = document.createElement('div');
-    toolLine.textContent = toolNames.join(', ');
-    toolLine.style.marginLeft = '0';
-    toolLine.style.paddingLeft = '0';
-    toolLine.style.textIndent = '0';
-    toolLine.style.display = 'inline';
-    toolLine.style.margin = '0';
-    eq.appendChild(toolLine);
-  }
+  // equipment (now as a single comma-separated line)
+  const eq = document.getElementById('equipment');
+  eq.innerHTML = '';
+  const tools = [].concat(extractArray(recipe.tool), extractArray(recipe.equipment), extractArray(recipe.supplies));
+  const toolNames = tools.filter(Boolean).map(t => typeof t === 'string' ? t : (t.name || t.text || JSON.stringify(t)));
+  if (toolNames.length) {
+    const toolLine = document.createElement('div');
+    toolLine.textContent = toolNames.join(', ');
+    toolLine.style.marginLeft = '0';
+    toolLine.style.paddingLeft = '0';
+    toolLine.style.textIndent = '0';
+    toolLine.style.display = 'inline';
+    toolLine.style.margin = '0';
+    eq.appendChild(toolLine);
+  }
 
-  // steps (full)
-  const steps = [];
-  if (Array.isArray(recipe.recipeInstructions)) {
-    recipe.recipeInstructions.forEach((s, idx0) => {
-      const index = idx0 + 1;
-      if (s && s['@type'] === 'HowToSection' && Array.isArray(s.itemListElement)) {
-        s.itemListElement.forEach((sub, jdx) => {
-          const txt = asPlainText(sub);
-          if (txt) {
-            const img = (sub && typeof sub === 'object') ? (sub.image || null) : null;
-            const tools = (sub && typeof sub === 'object' && sub.tool) ? sub.tool : [];
-            steps.push({ text: txt, image: img, tool: tools });
-          }
-        });
-      } else {
-        const txt = asPlainText(s);
-        if (txt) {
-          const img = (s && typeof s === 'object') ? (s.image || null) : null;
-          const tools = (s && typeof s === 'object' && s.tool) ? s.tool : [];
-          steps.push({ text: txt, image: img, tool: tools });
-        }
-      }
-    });
-  } else if (typeof recipe.recipeInstructions === 'string') {
-    recipe.recipeInstructions.split(/\n+|\r+/).forEach((t) => { if (t.trim()) steps.push({ text: t.trim(), image: null, tool: [] }); });
-  }
-  current.steps = steps;
-  current.idx = 0;
+  // steps (full)
+  const steps = [];
+  if (Array.isArray(recipe.recipeInstructions)) {
+    recipe.recipeInstructions.forEach((s, idx0) => {
+      const index = idx0 + 1;
+      if (s && s['@type'] === 'HowToSection' && Array.isArray(s.itemListElement)) {
+        s.itemListElement.forEach((sub, jdx) => {
+          const txt = asPlainText(sub);
+          if (txt) {
+            const img = (sub && typeof sub === 'object') ? (sub.image || null) : null;
+            const tools = (sub && typeof sub === 'object' && sub.tool) ? sub.tool : [];
+            steps.push({ text: txt, image: img, tool: tools });
+          }
+        });
+      } else {
+        const txt = asPlainText(s);
+        if (txt) {
+          const img = (s && typeof s === 'object') ? (s.image || null) : null;
+          const tools = (s && typeof s === 'object' && s.tool) ? s.tool : [];
+          steps.push({ text: txt, image: img, tool: tools });
+        }
+      }
+    });
+  } else if (typeof recipe.recipeInstructions === 'string') {
+    recipe.recipeInstructions.split(/\n+|\r+/).forEach((t) => { if (t.trim()) steps.push({ text: t.trim(), image: null, tool: [] }); });
+  }
+  current.steps = steps;
+  current.idx = 0;
 
-  const stepsEl = document.getElementById('steps');
-  stepsEl.innerHTML = '';
-  current.steps.forEach((s, i) => {
-    const li = document.createElement('li');
-    li.style.listStyle = 'none';
-    // Optionales Bild pro Schritt
-    if (s.image) {
-      const img = document.createElement('img');
-      img.className = 'img';
-      img.alt = `Schritt ${i+1}`;
-      img.onerror = () => { img.classList.add('hidden'); img.removeAttribute('src'); };
-      const declared = typeof s.image === 'string' ? s.image : (s.image && (s.image.url || s.image.contentUrl) || '');
-      const r = resolveImagePath(declared);
-      const cands = [];
-      if (r) cands.push(r);
-      candidateImagePaths(declared || `step${i+1}.jpg`, recipe.name).forEach(c => cands.push(c));
-      loadImageWithFallback(img, Array.from(new Set(cands)));
-      li.appendChild(img);
-    } else {
-      const img = document.createElement('img');
-      img.className = 'img hidden';
-      img.alt = `Schritt ${i+1}`;
-      loadStepImage(img, `step${i+1}.jpg`, recipe.name, i+1);
-      li.appendChild(img);
-    }
-    // Container für Utensilien und Schritttext, damit nur Schritttext nummeriert wird
-    const stepContainer = document.createElement('div');
-    stepContainer.style.display = 'block';
-    // Utensilienzeile OHNE Nummerierung anzeigen (direkt über Schritttext)
-    if (s.tool && Array.isArray(s.tool) && s.tool.length) {
-      const toolLine = document.createElement('div');
-      toolLine.classList.add('muted');
-      toolLine.style.marginBottom = '4px';
-      toolLine.style.marginTop = '8px';
-      toolLine.style.listStyleType = 'none';
-      toolLine.style.marginLeft = '0';
-      toolLine.style.paddingLeft = '0';
-      toolLine.textContent = s.tool.map(t => t.name || t.text || JSON.stringify(t)).join(', ');
-      stepContainer.appendChild(toolLine);
-    }
-    // Schritttext MIT Nummerierung anzeigen
-    const p = document.createElement('div');
-    p.style.marginTop = '4px';
-    p.style.marginBottom = '12px';
-    p.textContent = `${i + 1}. ${s.text}`;
-    stepContainer.appendChild(p);
-    li.appendChild(stepContainer);
-    stepsEl.appendChild(li);
-  });
+  const stepsEl = document.getElementById('steps');
+  stepsEl.innerHTML = '';
+  current.steps.forEach((s, i) => {
+    const li = document.createElement('li');
+    li.style.listStyle = 'none';
+    // Optionales Bild pro Schritt
+    if (s.image) {
+      const img = document.createElement('img');
+      img.className = 'img';
+      img.alt = `Schritt ${i+1}`;
+      img.onerror = () => { img.classList.add('hidden'); img.removeAttribute('src'); };
+      const declared = typeof s.image === 'string' ? s.image : (s.image && (s.image.url || s.image.contentUrl) || '');
+      const r = resolveImagePath(declared);
+      const cands = [];
+      if (r) cands.push(r);
+      candidateImagePaths(declared || `step${i+1}.jpg`, recipe.name).forEach(c => cands.push(c));
+      loadImageWithFallback(img, Array.from(new Set(cands)));
+      li.appendChild(img);
+    } else {
+      const img = document.createElement('img');
+      img.className = 'img hidden';
+      img.alt = `Schritt ${i+1}`;
+      loadStepImage(img, `step${i+1}.jpg`, recipe.name, i+1);
+      li.appendChild(img);
+    }
+    // Container für Utensilien und Schritttext, damit nur Schritttext nummeriert wird
+    const stepContainer = document.createElement('div');
+    stepContainer.style.display = 'block';
+    // Utensilienzeile OHNE Nummerierung anzeigen (direkt über Schritttext)
+    if (s.tool && Array.isArray(s.tool) && s.tool.length) {
+      const toolLine = document.createElement('div');
+      toolLine.classList.add('muted');
+      toolLine.style.marginBottom = '4px';
+      toolLine.style.marginTop = '8px';
+      toolLine.style.listStyleType = 'none';
+      toolLine.style.marginLeft = '0';
+      toolLine.style.paddingLeft = '0';
+      toolLine.textContent = s.tool.map(t => t.name || t.text || JSON.stringify(t)).join(', ');
+      stepContainer.appendChild(toolLine);
+    }
+    // Schritttext MIT Nummerierung anzeigen
+    const p = document.createElement('div');
+    p.style.marginTop = '4px';
+    p.style.marginBottom = '12px';
+    p.textContent = `${i + 1}. ${s.text}`;
+    stepContainer.appendChild(p);
+    li.appendChild(stepContainer);
+    stepsEl.appendChild(li);
+  });
 
-  // stepper
-  calculateNutrition();
-  refreshStepper();
+  // stepper
+  calculateNutrition();
+  refreshStepper();
 }
 
 function fillIngredients() {
-  const list = document.getElementById('ingredients');
-  list.innerHTML = '';
-  const sInput = document.getElementById('servings');
-  const desired = Number(sInput.value) || 1;
-  const base = current.baseYield || desired;
-  const scale = desired / base;
-  document.getElementById('scale').textContent = formatFactor(scale);
-  const ingr = extractArray(current.recipe?.recipeIngredient);
-  if (!ingr.length) return;
-  ingr.forEach(raw => {
-    let line = String(raw);
-    const { amount, rest } = parseLeadingQuantity(line);
-    if (amount != null) {
-      const scaled = amount * scale;
-      const li = document.createElement('li');
-      li.textContent = `${formatAmount(scaled)} ${rest}`.trim();
-      list.appendChild(li);
-    } else {
-      const li = document.createElement('li');
-      li.textContent = line; // cannot scale unknown format
-      list.appendChild(li);
-    }
-  });
+  const list = document.getElementById('ingredients');
+  list.innerHTML = '';
+  const sInput = document.getElementById('servings');
+  const desired = Number(sInput.value) || 1;
+  const base = current.baseYield || desired;
+  const scale = desired / base;
+  document.getElementById('scale').textContent = formatFactor(scale);
+  const ingr = extractArray(current.recipe?.recipeIngredient);
+  if (!ingr.length) return;
+  ingr.forEach(raw => {
+    let line = String(raw);
+    const { amount, rest } = parseLeadingQuantity(line);
+    if (amount != null) {
+      const scaled = amount * scale;
+      const li = document.createElement('li');
+      li.textContent = `${formatAmount(scaled)} ${rest}`.trim();
+      list.appendChild(li);
+    } else {
+      const li = document.createElement('li');
+      li.textContent = line; // cannot scale unknown format
+      list.appendChild(li);
+    }
+  });
 }
 
 function refreshStepper() {
-  const stepEl = document.getElementById('stepText');
-  const prog = document.getElementById('progress');
-  const imgEl = document.getElementById('stepImage');
-  const total = current.steps.length;
-  if (!total) { stepEl.textContent = 'Keine Schritte gefunden.'; prog.textContent = '—'; if (imgEl) { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); } return; }
-  const idx = Math.max(0, Math.min(current.idx, total-1));
-  current.idx = idx;
-  const stepObj = current.steps[idx];
-  stepEl.textContent = `\n${stepObj.text}\n`;
-  if (stepObj.tool && Array.isArray(stepObj.tool) && stepObj.tool.length) {
-    const toolsText = stepObj.tool.map(t => t.name || t.text || JSON.stringify(t)).join(', ');
-    stepEl.textContent += `\nUtensilien: ${toolsText}`;
-  }
-  prog.textContent = `Schritt ${idx+1} / ${total}`;
-  if (imgEl) {
-    loadStepImage(imgEl, stepObj.image || `step${idx+1}.jpg`, current.recipe?.name || '', idx+1);
-  }
+  const stepEl = document.getElementById('stepText');
+  const prog = document.getElementById('progress');
+  const imgEl = document.getElementById('stepImage');
+  const total = current.steps.length;
+  if (!total) { stepEl.textContent = 'Keine Schritte gefunden.'; prog.textContent = '—'; if (imgEl) { imgEl.classList.add('hidden'); imgEl.removeAttribute('src'); } return; }
+  const idx = Math.max(0, Math.min(current.idx, total-1));
+  current.idx = idx;
+  const stepObj = current.steps[idx];
+  stepEl.textContent = `\n${stepObj.text}\n`;
+  if (stepObj.tool && Array.isArray(stepObj.tool) && stepObj.tool.length) {
+    const toolsText = stepObj.tool.map(t => t.name || t.text || JSON.stringify(t)).join(', ');
+    stepEl.textContent += `\nUtensilien: ${toolsText}`;
+  }
+  prog.textContent = `Schritt ${idx+1} / ${total}`;
+  if (imgEl) {
+    loadStepImage(imgEl, stepObj.image || `step${idx+1}.jpg`, current.recipe?.name || '', idx+1);
+  }
 }
 
 // Pantry-Basisliste: Zutaten, die nicht auf die Einkaufsliste kopiert werden sollen
 const pantryItems = [
-  'salz', 'pfeffer', 'zucker', 'vanillezucker', 'honig', 'backpulver', 'natron', 'speisestärke',
-  'mehl', 'paniermehl', 'essig', 'öl', 'senf', 'ketchup', 'mayonnaise', 'sojasauce', 'brühe',
-  'fond', 'tomatenmark', 'reis', 'nudeln', 'haferflocken', 'semmelbrösel', 'hefe', 'kakao',
-  'marmelade', 'knoblauch', 'zwiebel', 'zwiebeln', 'zitronensaft', 'pfeffermühle',
-  'paprika', 'curry', 'kreuzkümmel', 'zimt', 'oregano', 'basilikum', 'thymian', 'chili', 'wasser'
+  'salz', 'pfeffer', 'zucker', 'vanillezucker', 'honig', 'backpulver', 'natron', 'speisestärke',
+  'mehl', 'paniermehl', 'essig', 'öl', 'senf', 'ketchup', 'mayonnaise', 'sojasauce', 'brühe',
+  'fond', 'tomatenmark', 'reis', 'nudeln', 'haferflocken', 'semmelbrösel', 'hefe', 'kakao',
+  'marmelade', 'knoblauch', 'zwiebel', 'zwiebeln', 'zitronensaft', 'pfeffermühle',
+  'paprika', 'curry', 'kreuzkümmel', 'zimt', 'oregano', 'basilikum', 'thymian', 'chili', 'wasser'
 ];
 
 // Erweiterte Nährwertdatenbank
 const nutritionDB = {
-  'zwiebel': { kcal: 40, carbs: 9, protein: 1, fat: 0 },
-  'knoblauch': { kcal: 140, carbs: 30, protein: 6, fat: 0.5 },
-  'karotte': { kcal: 41, carbs: 10, protein: 1, fat: 0.2 },
-  'paprika': { kcal: 31, carbs: 6, protein: 1, fat: 0.3 },
-  'tomate': { kcal: 18, carbs: 4, protein: 0.9, fat: 0.2 },
-  'gurke': { kcal: 12, carbs: 2, protein: 0.6, fat: 0.1 },
-  'zucchini': { kcal: 19, carbs: 3, protein: 1.6, fat: 0.3 },
-  'aubergine': { kcal: 25, carbs: 6, protein: 1, fat: 0.2 },
-  'brokkoli': { kcal: 34, carbs: 7, protein: 3, fat: 0.4 },
-  'blumenkohl': { kcal: 25, carbs: 5, protein: 2, fat: 0.2 },
-  'spinat': { kcal: 23, carbs: 3.6, protein: 2.9, fat: 0.4 },
-  'kohl': { kcal: 25, carbs: 6, protein: 2, fat: 0.1 },
-  'lauch': { kcal: 30, carbs: 7, protein: 1, fat: 0.2 },
-  'sellerie': { kcal: 16, carbs: 3, protein: 0.7, fat: 0.2 },
-  'fenchel': { kcal: 31, carbs: 7, protein: 1.2, fat: 0.2 },
-  'rote bete': { kcal: 43, carbs: 10, protein: 1.6, fat: 0.2 },
-  'pilz': { kcal: 22, carbs: 3, protein: 3, fat: 0.3 },
+  'zwiebel': { kcal: 40, carbs: 9, protein: 1, fat: 0 },
+  'knoblauch': { kcal: 140, carbs: 30, protein: 6, fat: 0.5 },
+  'karotte': { kcal: 41, carbs: 10, protein: 1, fat: 0.2 },
+  'paprika': { kcal: 31, carbs: 6, protein: 1, fat: 0.3 },
+  'tomate': { kcal: 18, carbs: 4, protein: 0.9, fat: 0.2 },
+  'gurke': { kcal: 12, carbs: 2, protein: 0.6, fat: 0.1 },
+  'zucchini': { kcal: 19, carbs: 3, protein: 1.6, fat: 0.3 },
+  'aubergine': { kcal: 25, carbs: 6, protein: 1, fat: 0.2 },
+  'brokkoli': { kcal: 34, carbs: 7, protein: 3, fat: 0.4 },
+  'blumenkohl': { kcal: 25, carbs: 5, protein: 2, fat: 0.2 },
+  'spinat': { kcal: 23, carbs: 3.6, protein: 2.9, fat: 0.4 },
+  'kohl': { kcal: 25, carbs: 6, protein: 2, fat: 0.1 },
+  'lauch': { kcal: 30, carbs: 7, protein: 1, fat: 0.2 },
+  'sellerie': { kcal: 16, carbs: 3, protein: 0.7, fat: 0.2 },
+  'fenchel': { kcal: 31, carbs: 7, protein: 1.2, fat: 0.2 },
+  'rote bete': { kcal: 43, carbs: 10, protein: 1.6, fat: 0.2 },
+  'pilz': { kcal: 22, carbs: 3, protein: 3, fat: 0.3 },
 
-  'kidneybohne': { kcal: 127, carbs: 22, protein: 9, fat: 0.5 },
-  'linse': { kcal: 116, carbs: 20, protein: 9, fat: 0.4 },
-  'kichererbse': { kcal: 164, carbs: 27, protein: 9, fat: 3 },
-  'erbse': { kcal: 81, carbs: 14, protein: 5, fat: 0.4 },
-  'mais': { kcal: 96, carbs: 21, protein: 3, fat: 1.5 },
+  'kidneybohne': { kcal: 127, carbs: 22, protein: 9, fat: 0.5 },
+  'linse': { kcal: 116, carbs: 20, protein: 9, fat: 0.4 },
+  'kichererbse': { kcal: 164, carbs: 27, protein: 9, fat: 3 },
+  'erbse': { kcal: 81, carbs: 14, protein: 5, fat: 0.4 },
+  'mais': { kcal: 96, carbs: 21, protein: 3, fat: 1.5 },
 
-  'apfel': { kcal: 52, carbs: 14, protein: 0.3, fat: 0.2 },
-  'banane': { kcal: 89, carbs: 23, protein: 1.1, fat: 0.3 },
-  'orange': { kcal: 47, carbs: 12, protein: 0.9, fat: 0.1 },
-  'zitrone': { kcal: 29, carbs: 9, protein: 1.1, fat: 0.3 },
-  'traube': { kcal: 70, carbs: 18, protein: 0.7, fat: 0.2 },
-  'beere': { kcal: 45, carbs: 10, protein: 1, fat: 0.3 },
+  'apfel': { kcal: 52, carbs: 14, protein: 0.3, fat: 0.2 },
+  'banane': { kcal: 89, carbs: 23, protein: 1.1, fat: 0.3 },
+  'orange': { kcal: 47, carbs: 12, protein: 0.9, fat: 0.1 },
+  'zitrone': { kcal: 29, carbs: 9, protein: 1.1, fat: 0.3 },
+  'traube': { kcal: 70, carbs: 18, protein: 0.7, fat: 0.2 },
+  'beere': { kcal: 45, carbs: 10, protein: 1, fat: 0.3 },
 
-  'reis': { kcal: 360, carbs: 79, protein: 7, fat: 0.6 },
-  'nudel': { kcal: 350, carbs: 73, protein: 13, fat: 1.5 },
-  'bulgur': { kcal: 342, carbs: 75, protein: 12, fat: 1.3 },
-  'couscous': { kcal: 360, carbs: 75, protein: 12, fat: 1.5 },
-  'mehl': { kcal: 340, carbs: 71, protein: 10, fat: 1 },
-  'brot': { kcal: 240, carbs: 50, protein: 8, fat: 2 },
+  'reis': { kcal: 360, carbs: 79, protein: 7, fat: 0.6 },
+  'nudel': { kcal: 350, carbs: 73, protein: 13, fat: 1.5 },
+  'bulgur': { kcal: 342, carbs: 75, protein: 12, fat: 1.3 },
+  'couscous': { kcal: 360, carbs: 75, protein: 12, fat: 1.5 },
+  'mehl': { kcal: 340, carbs: 71, protein: 10, fat: 1 },
+  'brot': { kcal: 240, carbs: 50, protein: 8, fat: 2 },
 
-  'milch': { kcal: 47, carbs: 5, protein: 3, fat: 1.5 },
-  'joghurt': { kcal: 60, carbs: 4, protein: 4, fat: 3 },
-  'quark': { kcal: 68, carbs: 3, protein: 12, fat: 0.2 },
-  'sahne': { kcal: 292, carbs: 3, protein: 2, fat: 30 },
-  'käse': { kcal: 350, carbs: 2, protein: 25, fat: 27 },
-  'butter': { kcal: 740, carbs: 0, protein: 0, fat: 82 },
+  'milch': { kcal: 47, carbs: 5, protein: 3, fat: 1.5 },
+  'joghurt': { kcal: 60, carbs: 4, protein: 4, fat: 3 },
+  'quark': { kcal: 68, carbs: 3, protein: 12, fat: 0.2 },
+  'sahne': { kcal: 292, carbs: 3, protein: 2, fat: 30 },
+  'käse': { kcal: 350, carbs: 2, protein: 25, fat: 27 },
+  'butter': { kcal: 740, carbs: 0, protein: 0, fat: 82 },
 
-  'hähnchen': { kcal: 165, carbs: 0, protein: 31, fat: 3.6 },
-  'rind': { kcal: 250, carbs: 0, protein: 26, fat: 17 },
-  'schwein': { kcal: 270, carbs: 0, protein: 25, fat: 20 },
-  'lachs': { kcal: 208, carbs: 0, protein: 20, fat: 13 },
-  'fisch': { kcal: 150, carbs: 0, protein: 20, fat: 7 },
-  'ei': { kcal: 155, carbs: 1, protein: 13, fat: 11 },
+  'hähnchen': { kcal: 165, carbs: 0, protein: 31, fat: 3.6 },
+  'rind': { kcal: 250, carbs: 0, protein: 26, fat: 17 },
+  'schwein': { kcal: 270, carbs: 0, protein: 25, fat: 20 },
+  'lachs': { kcal: 208, carbs: 0, protein: 20, fat: 13 },
+  'fisch': { kcal: 150, carbs: 0, protein: 20, fat: 7 },
+  'ei': { kcal: 155, carbs: 1, protein: 13, fat: 11 },
 
-  'öl': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
-  'olivenöl': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
-  'butterschmalz': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
+  'öl': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
+  'olivenöl': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
+  'butterschmalz': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
 
-  'zucker': { kcal: 400, carbs: 100, protein: 0, fat: 0 },
-  'honig': { kcal: 304, carbs: 82, protein: 0.3, fat: 0 },
-  'salz': { kcal: 0, carbs: 0, protein: 0, fat: 0 },
-  'gewürz': { kcal: 0, carbs: 0, protein: 0, fat: 0 },
-  'pfeffer': { kcal: 0, carbs: 0, protein: 0, fat: 0 },
-  // Erweiterte Einträge
-  'sesamöl': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
-  'sesam': { kcal: 573, carbs: 23, protein: 18, fat: 50 },
-  'pak choi': { kcal: 13, carbs: 2, protein: 1.5, fat: 0.2 },
-  'limette': { kcal: 30, carbs: 10, protein: 0.7, fat: 0.2 },
-  'sriracha': { kcal: 100, carbs: 20, protein: 2, fat: 0 },
-  'wildlachs': { kcal: 208, carbs: 0, protein: 20, fat: 13 },
-  'frühlingszwiebel': { kcal: 32, carbs: 7, protein: 2, fat: 0.2 }
+  'zucker': { kcal: 400, carbs: 100, protein: 0, fat: 0 },
+  'honig': { kcal: 304, carbs: 82, protein: 0.3, fat: 0 },
+  'salz': { kcal: 0, carbs: 0, protein: 0, fat: 0 },
+  'gewürz': { kcal: 0, carbs: 0, protein: 0, fat: 0 },
+  'pfeffer': { kcal: 0, carbs: 0, protein: 0, fat: 0 },
+  // Erweiterte Einträge
+  'sesamöl': { kcal: 884, carbs: 0, protein: 0, fat: 100 },
+  'sesam': { kcal: 573, carbs: 23, protein: 18, fat: 50 },
+  'pak choi': { kcal: 13, carbs: 2, protein: 1.5, fat: 0.2 },
+  'limette': { kcal: 30, carbs: 10, protein: 0.7, fat: 0.2 },
+  'sriracha': { kcal: 100, carbs: 20, protein: 2, fat: 0 },
+  'wildlachs': { kcal: 208, carbs: 0, protein: 20, fat: 13 },
+  'frühlingszwiebel': { kcal: 32, carbs: 7, protein: 2, fat: 0.2 }
 };
 
 function isPantryItem(ingredientLine) {
-  const clean = ingredientLine.toLowerCase()
-    .replace(/[^a-zäöüß0-9\s]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-  return pantryItems.some(word => clean.includes(word));
+  const clean = ingredientLine.toLowerCase()
+    .replace(/[^a-zäöüß0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return pantryItems.some(word => clean.includes(word));
 }
 
 // Typische Portionsgewichte für Zutaten (Fallback, wenn keine g/ml-Angabe vorhanden)
 const typicalWeights = {
-  'lachsfilet': 150,
-  'wildlachs': 150,
-  'hähnchenbrust': 150,
-  'ei': 60,
-  'zwiebel': 80,
-  'knoblauchzehe': 3,
-  'paprika': 150,
-  'apfel': 150,
-  'banane': 120,
-  'limette': 60,
-  'zitrone': 100,
-  'frühlingszwiebel': 15,
-  'pak choi': 200,
-  'teelöffel': 5,
-  'el': 15,
-  'tl öl': 4.5,
-  'el öl': 13.5
+  'lachsfilet': 150,
+  'wildlachs': 150,
+  'hähnchenbrust': 150,
+  'ei': 60,
+  'zwiebel': 80,
+  'knoblauchzehe': 3,
+  'paprika': 150,
+  'apfel': 150,
+  'banane': 120,
+  'limette': 60,
+  'zitrone': 100,
+  'frühlingszwiebel': 15,
+  'pak choi': 200,
+  'teelöffel': 5,
+  'el': 15,
+  'tl öl': 4.5,
+  'el öl': 13.5
 };
 
 // Nährwertberechnung (nutzt JSON-Werte, falls vorhanden; sonst Schätzung)
 function calculateNutrition() {
-  const el = document.getElementById('nutrition');
-  // 1) Falls Nutrition im JSON vorhanden ist → direkt anzeigen
-  const n = current.recipe?.nutrition;
-  if (n && (n.calories || n.carbohydrateContent || n.proteinContent || n.fatContent)) {
-    const parts = [];
-    let prefix = '';
-    if (n.servingSize) prefix += `Portionsgröße: ${String(n.servingSize).trim()} | `;
+  const el = document.getElementById('nutrition');
+  // 1) Falls Nutrition im JSON vorhanden ist → direkt anzeigen
+  const n = current.recipe?.nutrition;
+  if (n && (n.calories || n.carbohydrateContent || n.proteinContent || n.fatContent)) {
+    const parts = [];
+    if (n.calories) parts.push(String(n.calories).trim());
+    if (n.carbohydrateContent) parts.push('Kohlenhydrate: ' + String(n.carbohydrateContent).trim());
+    if (n.proteinContent) parts.push('Eiweiß: ' + String(n.proteinContent).trim());
+    if (n.fatContent) parts.push('Fett: ' + String(n.fatContent).trim());
+    el.textContent = parts.join(', ') || 'Keine Daten verfügbar';
+    return;
+  }
 
-    if (n.calories) parts.push('Energie: ' + String(n.calories).trim());
-    if (n.carbohydrateContent) parts.push('Kohlenhydrate: ' + String(n.carbohydrateContent).trim());
-    if (n.proteinContent) parts.push('Eiweiß: ' + String(n.proteinContent).trim());
-    if (n.fatContent) parts.push('Fett: ' + String(n.fatContent).trim());
-    el.textContent = prefix + (parts.join(', ') || 'Keine Daten verfügbar');
-    return;
-  }
+  // 2) Fallback: automatische Schätzung
+  const ingr = extractArray(current.recipe?.recipeIngredient);
+  if (!ingr.length) { el.textContent = 'Keine Daten verfügbar'; return; }
 
-  // 2) Fallback: automatische Schätzung
-  const ingr = extractArray(current.recipe?.recipeIngredient);
-  if (!ingr.length) { el.textContent = 'Keine Daten verfügbar'; return; }
+  let total = { kcal: 0, carbs: 0, protein: 0, fat: 0 };
+  ingr.forEach(raw => {
+    const lower = String(raw).toLowerCase();
 
-  let total = { kcal: 0, carbs: 0, protein: 0, fat: 0 };
-  ingr.forEach(raw => {
-    const lower = String(raw).toLowerCase();
+    // Gramm-Menge bestimmen
+    const { amount } = parseLeadingQuantity(raw);
+    let grams = amount || 0;
+    const gramMatch = lower.match(/(\d+)\s*g/);
+    if (gramMatch) {
+      grams = Number(gramMatch[1]);
+    } else {
+      // Portion via typische Gewichte (Fallback)
+      let normForWeight = lower
+        .replace(/filets?/g, '')
+        .replace(/ringe/g, '')
+        .replace(/abrieb/g, '')
+        .replace(/saft/g, '')
+        .replace(/[^a-zäöüß0-9\s]/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      const match = Object.keys(typicalWeights).find(k => normForWeight.includes(k));
+      grams = match ? typicalWeights[match] : 100;
+    }
 
-    // Gramm-Menge bestimmen
-    const { amount } = parseLeadingQuantity(raw);
-    let grams = amount || 0;
-    const gramMatch = lower.match(/(\d+)\s*g/);
-    if (gramMatch) {
-      grams = Number(gramMatch[1]);
-    } else {
-      // Portion via typische Gewichte (Fallback)
-      let normForWeight = lower
-        .replace(/filets?/g, '')
-        .replace(/ringe/g, '')
-        .replace(/abrieb/g, '')
-        .replace(/saft/g, '')
-        .replace(/[^a-zäöüß0-9\s]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-      const match = Object.keys(typicalWeights).find(k => normForWeight.includes(k));
-      grams = match ? typicalWeights[match] : 100;
-    }
+    // Zutat normalisieren fürs Matching
+    let norm = lower
+      .replace(/filets?/g, '')
+      .replace(/ringe/g, '')
+      .replace(/abrieb/g, '')
+      .replace(/saft/g, '')
+      .replace(/[^a-zäöüß0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
 
-    // Zutat normalisieren fürs Matching
-    let norm = lower
-      .replace(/filets?/g, '')
-      .replace(/ringe/g, '')
-      .replace(/abrieb/g, '')
-      .replace(/saft/g, '')
-      .replace(/[^a-zäöüß0-9\s]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
+    for (const key in nutritionDB) {
+      if (norm.includes(key)) {
+        const factor = grams / 100;
+        total.kcal += nutritionDB[key].kcal * factor;
+        total.carbs += nutritionDB[key].carbs * factor;
+        total.protein += nutritionDB[key].protein * factor;
+        total.fat += nutritionDB[key].fat * factor;
+      }
+    }
+  });
 
-    for (const key in nutritionDB) {
-      if (norm.includes(key)) {
-        const factor = grams / 100;
-        total.kcal += nutritionDB[key].kcal * factor;
-        total.carbs += nutritionDB[key].carbs * factor;
-        total.protein += nutritionDB[key].protein * factor;
-        total.fat += nutritionDB[key].fat * factor;
-      }
-    }
-  });
+  const servings = Number(document.getElementById('servings').value) || 1;
+  const perPortion = {
+    kcal: total.kcal / servings,
+    carbs: total.carbs / servings,
+    protein: total.protein / servings,
+    fat: total.fat / servings
+  };
 
-  const servings = Number(document.getElementById('servings').value) || 1;
-  const perPortion = {
-    kcal: total.kcal / servings,
-    carbs: total.carbs / servings,
-    protein: total.protein / servings,
-    fat: total.fat / servings
-  };
-
-  el.textContent = `${Math.round(perPortion.kcal)} kcal, Kohlenhydrate: ${Math.round(perPortion.carbs)} g, Eiweiß: ${Math.round(perPortion.protein)} g, Fett: ${Math.round(perPortion.fat)} g`;
+  el.textContent = `Pro Portion: ${Math.round(perPortion.kcal)} kcal, Kohlenhydrate: ${Math.round(perPortion.carbs)} g, Eiweiß: ${Math.round(perPortion.protein)} g, Fett: ${Math.round(perPortion.fat)} g`;
 }
 
 // Events
 const filesInput = document.getElementById('files');
 filesInput.addEventListener('change', async (e) => {
-  const files = Array.from(e.target.files);
-  if (!files.length) return;
+  const files = Array.from(e.target.files);
+  if (!files.length) return;
 
-  // Finde die JSON-Datei und die Bilddateien
-  const jsonFile = files.find(f => f.name.endsWith('.json') || f.name.endsWith('.jsonld'));
-  const imageFiles = files.filter(f => f.type.startsWith('image/'));
+  // Finde die JSON-Datei und die Bilddateien
+  const jsonFile = files.find(f => f.name.endsWith('.json') || f.name.endsWith('.jsonld'));
+  const imageFiles = files.filter(f => f.type.startsWith('image/'));
 
-  if (!jsonFile) {
-    alert('Bitte wähle eine JSON-Rezeptdatei aus.');
-    return;
-  }
+  if (!jsonFile) {
+    alert('Bitte wähle eine JSON-Rezeptdatei aus.');
+    return;
+  }
 
-  // Lade die Bilder in den Speicher, damit sie gefunden werden können
-  indexSelectedImages(imageFiles);
+  // Lade die Bilder in den Speicher, damit sie gefunden werden können
+  indexSelectedImages(imageFiles);
 
-  // Lese und verarbeite die JSON-Datei
-  const text = await jsonFile.text();
-  let obj = null;
-  try {
-    obj = JSON.parse(text);
-  } catch (err) {
-    alert('Keine gültige JSON-Datei.');
-    return;
-  }
+  // Lese und verarbeite die JSON-Datei
+  const text = await jsonFile.text();
+  let obj = null;
+  try {
+    obj = JSON.parse(text);
+  } catch (err) {
+    alert('Keine gültige JSON-Datei.');
+    return;
+  }
 
-  // JSON-LD auf der Seite enthält häufig einen @graph – versuche Recipe zu finden
-  if (obj['@graph']) {
-    const rec = obj['@graph'].find(x => x['@type'] === 'Recipe');
-    if (rec) obj = rec;
-  }
-  const type = Array.isArray(obj['@type']) ? obj['@type'] : [obj['@type']];
-  if (!type.includes('Recipe')) {
-    alert('Kein schema.org Recipe gefunden.');
-    return;
-  }
-  
-  rebuild(obj);
+  // JSON-LD auf der Seite enthält häufig einen @graph – versuche Recipe zu finden
+  if (obj['@graph']) {
+    const rec = obj['@graph'].find(x => x['@type'] === 'Recipe');
+    if (rec) obj = rec;
+  }
+  const type = Array.isArray(obj['@type']) ? obj['@type'] : [obj['@type']];
+  if (!type.includes('Recipe')) {
+    alert('Kein schema.org Recipe gefunden.');
+    return;
+  }
+  
+  rebuild(obj);
 });
 
 // servings scale listener
 const servingsInput = document.getElementById('servings');
 servingsInput.addEventListener('input', () => {
-  if (current.recipe) {
-    fillIngredients();
-    calculateNutrition();
-  }
+  if (current.recipe) {
+    fillIngredients();
+    calculateNutrition();
+  }
 });
 
 // stepper controls
@@ -760,35 +752,34 @@ btnNext.addEventListener('click', () => { current.idx = Math.min((current.steps.
 // show all steps button: scroll to list
 const btnShowAll = document.getElementById('showAll');
 btnShowAll.addEventListener('click', () => {
-  document.querySelector('#steps')?.scrollIntoView({ behavior: 'smooth' });
+  document.querySelector('#steps')?.scrollIntoView({ behavior: 'smooth' });
 });
 
 // copy shopping list
 const btnCopy = document.getElementById('copyList');
 btnCopy.addEventListener('click', async () => {
-  const items = Array.from(document.querySelectorAll('#ingredients li'))
-    .map(li => li.textContent.trim())
-    .filter(txt => txt && !isPantryItem(txt));
+  const items = Array.from(document.querySelectorAll('#ingredients li'))
+    .map(li => li.textContent.trim())
+    .filter(txt => txt && !isPantryItem(txt));
 
-  const text = items.join(', ');
-  try { await navigator.clipboard.writeText(text); alert('Einkaufsliste kopiert.'); } catch { alert('Kopieren nicht möglich.'); }
+  const text = items.join(', ');
+  try { await navigator.clipboard.writeText(text); alert('Einkaufsliste kopiert.'); } catch { alert('Kopieren nicht möglich.'); }
 });
 
 // toggle mode (focus stepper by hiding full steps)
 const btnMode = document.getElementById('toggleMode');
 btnMode.addEventListener('click', () => {
-  const full = document.querySelector('section.card');
-  const aside = document.querySelector('aside.card');
-  if (full.style.display === 'none') {
-    full.style.display = '';
-    btnMode.textContent = 'Schrittmodus';
-  } else {
-    full.style.display = 'none';
-    btnMode.textContent = 'Vollansicht';
-    aside.scrollIntoView({ behavior: 'smooth' });
-  }
+  const full = document.querySelector('section.card');
+  const aside = document.querySelector('aside.card');
+  if (full.style.display === 'none') {
+    full.style.display = '';
+    btnMode.textContent = 'Schrittmodus';
+  } else {
+    full.style.display = 'none';
+    btnMode.textContent = 'Vollansicht';
+    aside.scrollIntoView({ behavior: 'smooth' });
+  }
 });
 </script>
 </body>
 </html>
-```
